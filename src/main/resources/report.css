@@ -1,0 +1,17 @@
+#header {
+	text-align: center;
+	background: #ddccff;
+}
+
+#report {
+	float: left;
+}
+
+#leftbar {
+	float:right;
+	background: #eeddff;
+}
+
+div.code pre {
+	background: #eeeeee;
+}
