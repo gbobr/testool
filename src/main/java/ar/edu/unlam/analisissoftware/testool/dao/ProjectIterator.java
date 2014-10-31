@@ -4,20 +4,25 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import ar.edu.unlam.analisissoftware.testool.reports.ProjectReport;
+
 public class ProjectIterator {
 	private TestTool testTool;
-
+	private ProjectReport projectReport;
+	
 	@Autowired
 	public ProjectIterator(TestTool testTool) {
 		super();
 		this.testTool = testTool;
 	}
 	
-	public void visitDirectory(File directory){
+	public ProjectReport analyzeProject(File directory){
+		projectReport = new ProjectReport(directory.getAbsolutePath());
 		visitDirectory(directory,"./");
+		return projectReport;
 	}
 	
-	public void visitDirectory(File directory,String relativePath){
+	private void visitDirectory(File directory,String relativePath){
 		//TODO: Refactorizar sobre un threadPool
 		if( !directory.isDirectory() )
 			throw new IllegalArgumentException( "Not a directory!" );
@@ -28,7 +33,7 @@ public class ProjectIterator {
 			if(file.isDirectory())
 				visitDirectory( file,relativePath+file.getName()+"/" );
 			else if(file.getName().endsWith(".java")){
-				testTool.generateReportForClass(file,relativePath);
+				projectReport.addClass(testTool.generateReportForClass(file,relativePath));
 			}
 		}
 	}

@@ -1,22 +1,26 @@
-package ar.edu.unlam.analisissoftware.testool.model;
+package ar.edu.unlam.analisissoftware.testool.reports;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Report {
+import ar.edu.unlam.analisissoftware.testool.model.Class;
+import ar.edu.unlam.analisissoftware.testool.model.Method;
+import ar.edu.unlam.analisissoftware.testool.model.Metric;
+
+public class MethodReport extends Report {
 	private Class _class;
 	private Method method;
 	private List<Metric> metrics;
 	
-	public Report(Class _class, Method method, List<Metric> metrics) {
-		super();
+	public MethodReport(Class _class, Method method, List<Metric> metrics, String reportPath) {
+		super(reportPath);
 		this._class = _class;
 		this.method = method;
 		this.metrics = metrics;
 	}
 
-	public Report(Class _class, Method method) {
-		this(_class,method,new ArrayList<Metric>());		
+	public MethodReport(Class _class, Method method, String reportPath) {
+		this(_class,method,new ArrayList<Metric>(), reportPath);		
 	}
 	
 	public void addMetric(Metric metric){
