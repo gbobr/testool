@@ -33,14 +33,19 @@ public class TestTool {
 
 	public String generateReportForClass(File javaFile,String relativePath){		
 		String outPath=getDestinationPath(javaFile.getName(), relativePath);
-		Class myClass=parserService.parse(javaFile);
 		
-		for(Method method: myClass.getMethods()){
-			Report currentReport=new Report(myClass,method,metrics);
-			currentReport.calculateAllMetrics();
-			velocityReportingService.generateReport(currentReport,outPath);
+		Class myClass;
+		try{
+			myClass=parserService.parse(javaFile);
+		
+			for(Method method: myClass.getMethods()){
+				Report currentReport=new Report(myClass,method,metrics);
+				currentReport.calculateAllMetrics();
+				velocityReportingService.generateReport(currentReport,outPath);
+			}
+		} catch (Exception e){
+			e.printStackTrace();
 		}
-		
 		return outPath;
 	}
 	
