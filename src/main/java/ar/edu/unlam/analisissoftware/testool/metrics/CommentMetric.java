@@ -19,7 +19,22 @@ public class CommentMetric extends Metric {
 
 	@Override
 	public void internalCalculate(Method method) {
-		method.getCode();
+		String[] lines=method.getCode().split("\n");
+		Boolean multiline=false;
+		Integer count=0;
+		for(String line:lines){			
+			if(line.contains("/*")){
+				count++;
+				multiline=true;
+			} else if(line.contains("*/")){
+				count++;
+				multiline=false;			
+			}else if(line.contains("//") || multiline) {
+					count++;
+			}
+		}
+		
+		commentCount=count;
 	}
 	
 	public Integer getRawValue(){
