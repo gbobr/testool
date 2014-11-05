@@ -66,7 +66,7 @@ public class VelocityReportingServiceTest
     	VelocityEngine ve=new VelocityEngine();
     	ve.setProperty(Velocity.FILE_RESOURCE_LOADER_PATH, "src/main/resources/");
         VelocityReportingService vrs=new VelocityReportingService(ve, new ConfigService());
-        String result=vrs.generateReport(buildReport(),"target/");
+        String result=vrs.generateMethodReport(buildReport(),"target/");
         assertNotNull(result);
         System.out.println(result);
     }

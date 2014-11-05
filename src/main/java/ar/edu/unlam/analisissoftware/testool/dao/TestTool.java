@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,19 +20,19 @@ import ar.edu.unlam.analisissoftware.testool.service.VelocityReportingService;
 
 @Component
 public class TestTool {
+	final Logger logger = LoggerFactory.getLogger(TestTool.class);
+	
 	VelocityReportingService velocityReportingService;
 	ParserService parserService;
 	List<Metric> metrics;
-	ConfigService configService;
 		
 	@Autowired
 	public TestTool(VelocityReportingService velocityReportingService,
-			ParserService parserService, List<Metric> metrics, ConfigService configService) {
+			ParserService parserService, List<Metric> metrics) {
 		super();
 		this.velocityReportingService = velocityReportingService;
 		this.parserService = parserService;
 		this.metrics = metrics;
-		this.configService=configService;
 	}
 
 	public ClassReport generateReportForClass(File javaFile,String relativePath){		
@@ -44,20 +46,22 @@ public class TestTool {
 			for(Method method: myClass.getMethods()){
 				MethodReport currentReport=new MethodReport(myClass,method,metrics,outPath+method.getName()+".html");
 				currentReport.calculateAllMetrics();
-				velocityReportingService.generateReport(currentReport,outPath);
+				velocityReportingService.generateMethodReport(currentReport,outPath);
 				reports.add(currentReport);
 			}
 			
-			ClassReport cr=new ClassReport(reports,outPath+myClass.getName()+".html");
+			ClassReport cr=new ClassReport(myClass,reports,outPath+myClass.getName()+".html");
+			velocityReportingService.generateClassReport(cr, outPath);
 			
 			return cr;
 		} catch(Exception e) {
+			logger.error("Ocurrio un error procesando la clase " + javaFile.getName(),e);
 			return null;
 		}
 	}
 	
 	private String getDestinationPath(String filename,String relativePath){
-		String outputPath=configService.getBaseOutputDir()+relativePath+filename+"/";
+		String outputPath=relativePath+filename+"/";
 		File directory=new File(outputPath);
 		if(!directory.exists())
 			directory.mkdirs();

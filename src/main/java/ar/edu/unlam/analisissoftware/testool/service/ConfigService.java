@@ -25,7 +25,7 @@ public class ConfigService {
 	@Bean VelocityReportingService velocityReportingService(){ return new VelocityReportingService(velocityEngine(), configService()); }
 	@Bean ClassParserFactory classParserFactory(){ return new JapaClassParserFactory(); }
 	@Bean ParserService parserService(){ return new ParserService(classParserFactory()); }
-	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics(),configService()); }
+	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics()); }
 	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool()); }
 
 	//Velocity engine
@@ -48,22 +48,31 @@ public class ConfigService {
 		metrics.add(commentPercentMetric());
 		return metrics;
 	}
-	
-	private String baseOutputDir="target/testtool/";
-	private String templateName="report.vm";
-	
-	public String getBaseOutputDir() {
-		return baseOutputDir;
-	}
 
-	public void setBaseOutputDir(String baseOutputDir) {
-		this.baseOutputDir=baseOutputDir;
-		if(!this.baseOutputDir.endsWith("/")) baseOutputDir=baseOutputDir+"/";
+	private String methodTemplateName="methodReport.vm";
+	private String classTemplateName="classReport.vm";
+	private String projectTemplateName="projectReport.vm";
+
+	public String getClassTemplateName() {
+		return classTemplateName;
 	}
-	public String getTemplateName() {
-		return templateName;
+	public void setClassTemplateName(String classTemplateName) {
+		this.classTemplateName = classTemplateName;
 	}
-	public void setTemplateName(String templateName) {
-		this.templateName = templateName;
+	
+	public String getMethodTemplateName() {
+		return methodTemplateName;
 	}
+	public void setMethodTemplateName(String methodTemplateName) {
+		this.methodTemplateName = methodTemplateName;
+	}
+	
+	public String getProjectTemplateName() {
+		return projectTemplateName;
+	}
+	public void setProjectTemplateName(String projectTemplateName) {
+		this.projectTemplateName = projectTemplateName;
+	}
+	
+	
 }

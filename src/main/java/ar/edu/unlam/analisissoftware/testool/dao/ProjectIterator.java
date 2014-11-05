@@ -23,9 +23,9 @@ public class ProjectIterator {
 		this.testTool = testTool;
 	}
 	
-	public ProjectReport analyzeProject(File directory){		
-		projectReport = new ProjectReport(directory.getAbsolutePath());
-		visitDirectory(directory,"./");
+	public ProjectReport analyzeProject(File projectDir, File outputDir){		
+		projectReport = new ProjectReport(outputDir.getAbsolutePath()+"/");
+		visitDirectory(projectDir,outputDir.getAbsolutePath()+"/");
 		return projectReport;
 	}
 	
@@ -43,8 +43,10 @@ public class ProjectIterator {
 			else if(file.getName().endsWith(".java")){
 				logger.info("Procesando archivo '" + file.getName() + "'");
 				ClassReport cr=testTool.generateReportForClass(file,relativePath);
-				if(cr!=null)
+				if(cr!=null){
+					
 					projectReport.addClass(cr);
+				}
 			}
 		}
 	}

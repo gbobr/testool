@@ -55,7 +55,7 @@ $method.getCode()
 			<h2>M&eacute;todos de la clase:</h2>
 			<ul>
 				#foreach( $method in $class.getMethods() )
-				<li><a href="$method.getReport">$method.getName()</a></li>
+				<li><a href="$method.getReport()">$method.getName()</a></li>
 				#end
 			<ul>
 		</div>

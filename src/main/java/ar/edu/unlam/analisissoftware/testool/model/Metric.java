@@ -1,6 +1,12 @@
 package ar.edu.unlam.analisissoftware.testool.model;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ar.edu.unlam.analisissoftware.testool.dao.ProjectIterator;
+
 public abstract class Metric {
+	final Logger logger = LoggerFactory.getLogger(ProjectIterator.class);
 	private Boolean pHasBeenCalculated=false;
 	
 	public abstract String getName();
@@ -9,6 +15,7 @@ public abstract class Metric {
 	
 	public void calculate(Method method){
 		pHasBeenCalculated=true;
+		logger.info("Procesando métrica {} para el método {}",this.getName(),method.getName());
 		internalCalculate(method);
 	}
 	

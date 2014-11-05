@@ -26,7 +26,7 @@ public class Main
         
         if(chosenDirectory.isDirectory()){
 			try {		    	
-		    	pi.analyzeProject(chosenDirectory);				
+		    	pi.analyzeProject(chosenDirectory,outputDir);				
 			} catch(Exception ex) {
 				logger.error("No se puede analizar el proyecto.", ex);
 			}
