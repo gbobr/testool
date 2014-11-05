@@ -1,0 +1,41 @@
+<html>
+	<head>
+		<title>Reporte de testing $classReport.get_class().getName()</title>
+		<!--link rel="stylesheet" type="text/css" href="report.css" /-->
+		<style>
+			#header {
+				text-align: center;
+				background: #ddccff;
+			}
+			
+			#report {
+				float: left;
+			}
+			
+			#leftbar {
+				float:right;
+				background: #eeddff;
+			}
+			
+			div.code pre {
+				background: #eeeeee;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="header"><h1>Reporte de testing $classReport.get_class().getName()</h1></div>
+		<div id="report">
+			<div class="rptresults">
+				<h3>M&eacute;todos</h3>
+				<ul>
+					#foreach( $method in $classReport.getMethodReports() )
+					<li>
+						<a href=#[["]]#$method.getMethod().getName().html#[["]]#>$method.getMethod().getName()</a>
+					</li>
+					#end
+				</ul>
+			</div>
+			<a href="..">Volver</a>
+		</div>		
+	</body>
+</html>
