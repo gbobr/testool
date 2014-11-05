@@ -19,7 +19,7 @@ public class JapaClassParser implements ClassParser {
 	@SuppressWarnings("unchecked")
 	public Class getClass(File file) throws ParserException {
 			try{
-				CompilationUnit cu=JavaParser.parse(file);
+				CompilationUnit cu=JavaParser.parse(file);				
 				JapaMethodVisitor jmv=new JapaMethodVisitor();
 				jmv.visit(cu,null);
 				return new Class(cu.getClass().getName(),jmv.getMethods(),this);

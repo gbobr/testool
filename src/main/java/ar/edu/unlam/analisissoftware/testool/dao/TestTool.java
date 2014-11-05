@@ -1,6 +1,7 @@
 package ar.edu.unlam.analisissoftware.testool.dao;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,8 @@ import org.springframework.stereotype.Component;
 import ar.edu.unlam.analisissoftware.testool.model.Class;
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
-import ar.edu.unlam.analisissoftware.testool.model.Report;
+import ar.edu.unlam.analisissoftware.testool.reports.ClassReport;
+import ar.edu.unlam.analisissoftware.testool.reports.MethodReport;
 import ar.edu.unlam.analisissoftware.testool.service.ConfigService;
 import ar.edu.unlam.analisissoftware.testool.service.ParserService;
 import ar.edu.unlam.analisissoftware.testool.service.VelocityReportingService;
@@ -31,22 +33,27 @@ public class TestTool {
 		this.configService=configService;
 	}
 
-	public String generateReportForClass(File javaFile,String relativePath){		
+	public ClassReport generateReportForClass(File javaFile,String relativePath){		
 		String outPath=getDestinationPath(javaFile.getName(), relativePath);
-		
 		Class myClass;
 		try{
 			myClass=parserService.parse(javaFile);
 		
+			List<MethodReport> reports = new ArrayList<MethodReport>();
+			
 			for(Method method: myClass.getMethods()){
-				Report currentReport=new Report(myClass,method,metrics);
+				MethodReport currentReport=new MethodReport(myClass,method,metrics,outPath+method.getName()+".html");
 				currentReport.calculateAllMetrics();
 				velocityReportingService.generateReport(currentReport,outPath);
+				reports.add(currentReport);
 			}
-		} catch (Exception e){
-			e.printStackTrace();
+			
+			ClassReport cr=new ClassReport(reports,outPath+myClass.getName()+".html");
+			
+			return cr;
+		} catch(Exception e) {
+			return null;
 		}
-		return outPath;
 	}
 	
 	private String getDestinationPath(String filename,String relativePath){

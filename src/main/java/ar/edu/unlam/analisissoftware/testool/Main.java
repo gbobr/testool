@@ -15,8 +15,10 @@ public class Main
     {
         ApplicationContext context = new AnnotationConfigApplicationContext(ConfigService.class);
         File chosenDirectory=new File(args[0]);
+        File outputDir=new File(args[1]);
+        
         ProjectIterator pi=context.getBean(ProjectIterator.class);
         if(chosenDirectory.isDirectory());
-        	pi.visitDirectory(chosenDirectory);       
+        	pi.analyzeProject(chosenDirectory);       
     }
 }

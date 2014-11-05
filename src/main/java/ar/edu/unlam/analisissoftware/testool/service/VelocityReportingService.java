@@ -7,7 +7,7 @@ import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import ar.edu.unlam.analisissoftware.testool.model.Report;
+import ar.edu.unlam.analisissoftware.testool.reports.MethodReport;
 
 public class VelocityReportingService {
 	private VelocityEngine velocityEngine;
@@ -20,7 +20,7 @@ public class VelocityReportingService {
 		this.configService=configService;
 	}
 
-	public String generateReport(Report report,String outPath){
+	public String generateReport(MethodReport report,String outPath){
 		String filepath=outPath+report.getMethod().getName()+".html";
 		try {
 			FileWriter fileWriter=new FileWriter(filepath,false);
@@ -33,7 +33,7 @@ public class VelocityReportingService {
 		return filepath;
 	}
 	
-	private VelocityContext generateContext(Report report){
+	private VelocityContext generateContext(MethodReport report){
 		VelocityContext ctx = new VelocityContext();
 		ctx.put("class", report.get_class());
 		ctx.put("method", report.getMethod());

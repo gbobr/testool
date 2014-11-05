@@ -10,7 +10,7 @@ import org.apache.velocity.app.VelocityEngine;
 import ar.edu.unlam.analisissoftware.testool.model.Class;
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
-import ar.edu.unlam.analisissoftware.testool.model.Report;
+import ar.edu.unlam.analisissoftware.testool.reports.MethodReport;
 import ar.edu.unlam.analisissoftware.testool.service.ConfigService;
 import ar.edu.unlam.analisissoftware.testool.service.VelocityReportingService;
 
@@ -38,7 +38,7 @@ public class VelocityReportingServiceTest
         return new TestSuite( VelocityReportingServiceTest.class );
     }
 
-    private Report buildReport(){
+    private MethodReport buildReport(){
     	Class myClass=new Class("ClaseDePrueba");
     	
     	Method myMethod=new Method("testMethod","#","public void testMethod(){"
@@ -56,7 +56,7 @@ public class VelocityReportingServiceTest
 			@Override public String getValue() { return internalGetValue(); }
     	};
     	
-    	Report report=new Report(myClass,myMethod);
+    	MethodReport report=new MethodReport(myClass,myMethod,"target/"+myMethod.getName());
     	report.addMetric(metric);
     	return report;
     }
