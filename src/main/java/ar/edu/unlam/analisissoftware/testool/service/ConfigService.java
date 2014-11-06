@@ -13,6 +13,8 @@ import ar.edu.unlam.analisissoftware.testool.dao.TestTool;
 import ar.edu.unlam.analisissoftware.testool.metrics.CCMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentPercentMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.FanInMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.FanOutMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadLengthMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadVolumeMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.LocMetric;
@@ -29,6 +31,9 @@ public class ConfigService {
 	@Bean ParserService parserService(){ return new ParserService(classParserFactory()); }
 	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics()); }
 	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool(),velocityReportingService()); }
+	@Bean FanInMetric fanInMetric() { return new FanInMetric(); }
+	@Bean FanOutMetric fanOutMetric() { return new FanOutMetric(); }
+	@Bean CCMetric ccMetric() { return new CCMetric(); }
 
 	//Velocity engine
 	@Bean VelocityEngine velocityEngine(){ 
@@ -42,7 +47,6 @@ public class ConfigService {
 	@Bean LocMetric locMetric(){ return new LocMetric();}
 	@Bean CommentMetric commentMetric(){ return new CommentMetric(); }
 	@Bean CommentPercentMetric commentPercentMetric(){ return new CommentPercentMetric(locMetric(), commentMetric()); }
-	@Bean CCMetric ccMetric(){ return new CCMetric(); }
 	@Bean HalsteadLengthMetric lenMetric() { return new HalsteadLengthMetric();}
 	@Bean HalsteadVolumeMetric volumenMetric() { return new HalsteadVolumeMetric();}
 	@Bean List<Metric> metrics() { 
@@ -50,9 +54,11 @@ public class ConfigService {
 		metrics.add(locMetric());
 		metrics.add(commentMetric());
 		metrics.add(commentPercentMetric());
-		metrics.add(ccMetric());
 		metrics.add(lenMetric());
 		metrics.add(volumenMetric());
+		metrics.add(fanInMetric());
+		metrics.add(fanOutMetric());
+		metrics.add(ccMetric());
 		return metrics;
 	}
 
