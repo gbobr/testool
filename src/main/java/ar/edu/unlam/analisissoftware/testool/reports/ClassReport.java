@@ -37,7 +37,7 @@ public class ClassReport extends Report {
 	}
 
 	public String getBasePath() {
-		return basePath;
+		return "file:/"+basePath.replace("\\", "/");
 	}
 	
 	

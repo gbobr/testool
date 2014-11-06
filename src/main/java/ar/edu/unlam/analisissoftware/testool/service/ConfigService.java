@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 
 import ar.edu.unlam.analisissoftware.testool.dao.ProjectIterator;
 import ar.edu.unlam.analisissoftware.testool.dao.TestTool;
+import ar.edu.unlam.analisissoftware.testool.metrics.CCMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentPercentMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadLengthMetric;
@@ -41,6 +42,7 @@ public class ConfigService {
 	@Bean LocMetric locMetric(){ return new LocMetric();}
 	@Bean CommentMetric commentMetric(){ return new CommentMetric(); }
 	@Bean CommentPercentMetric commentPercentMetric(){ return new CommentPercentMetric(locMetric(), commentMetric()); }
+	@Bean CCMetric ccMetric(){ return new CCMetric(); }
 	@Bean HalsteadLengthMetric lenMetric() { return new HalsteadLengthMetric();}
 	@Bean HalsteadVolumeMetric volumenMetric() { return new HalsteadVolumeMetric();}
 	@Bean List<Metric> metrics() { 
@@ -48,6 +50,7 @@ public class ConfigService {
 		metrics.add(locMetric());
 		metrics.add(commentMetric());
 		metrics.add(commentPercentMetric());
+		metrics.add(ccMetric());
 		metrics.add(lenMetric());
 		metrics.add(volumenMetric());
 		return metrics;

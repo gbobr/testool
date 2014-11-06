@@ -9,7 +9,7 @@ public abstract class Report {
 	}
 	
 	public String getReportPath() {
-		return reportPath;
+		return "file:/"+reportPath.replace("\\", "/");
 	}
 
 	public void setReportPath(String reportPath) {
