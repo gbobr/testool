@@ -19,6 +19,10 @@ public class Class {
 		this.name=name;
 		this.methods=methods;
 		this.parser=parser;
+		
+		for(Method method : methods){
+			method.setMethodClass(this);
+		}
 	}
 
 	public List<Method> getMethods() {

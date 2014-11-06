@@ -11,8 +11,11 @@ import org.springframework.context.annotation.Configuration;
 
 import ar.edu.unlam.analisissoftware.testool.dao.ProjectIterator;
 import ar.edu.unlam.analisissoftware.testool.dao.TestTool;
+import ar.edu.unlam.analisissoftware.testool.metrics.CCMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentPercentMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.FanInMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.FanOutMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadLengthMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadVolumeMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.LocMetric;
@@ -29,6 +32,9 @@ public class ConfigService {
 	@Bean ParserService parserService(){ return new ParserService(classParserFactory()); }
 	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics()); }
 	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool()); }
+	@Bean FanInMetric fanInMetric() { return new FanInMetric(); }
+	@Bean FanOutMetric fanOutMetric() { return new FanOutMetric(); }
+	@Bean CCMetric ccMetric() { return new CCMetric(); }
 
 	//Velocity engine
 	@Bean VelocityEngine velocityEngine(){ 
@@ -51,6 +57,9 @@ public class ConfigService {
 		metrics.add(commentPercentMetric());
 		metrics.add(lenMetric());
 		metrics.add(volumenMetric());
+		metrics.add(fanInMetric());
+		metrics.add(fanOutMetric());
+		metrics.add(ccMetric());
 		return metrics;
 	}
 

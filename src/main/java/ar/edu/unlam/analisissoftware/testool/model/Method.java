@@ -7,6 +7,7 @@ public class Method {
 	private String reportUrl;
 	private String code;
 	private MethodParser parser;
+	private Class mClass;
 	
 	public Method(String name, String code, MethodParser parser) {
 		this(name,code);
@@ -39,5 +40,13 @@ public class Method {
 	
 	public MethodParser getParser(){
 		return parser;
+	}
+
+	public Class getMethodClass() {
+		return mClass;
+	}
+
+	public void setMethodClass(Class methodClass) {
+		this.mClass = methodClass;
 	}
 }
