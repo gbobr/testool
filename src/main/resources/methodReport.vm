@@ -1,3 +1,4 @@
+#set ( $C = '"' )
 <html>
 	<head>
 		<title>Reporte de testing $class.getName()</title>
@@ -55,8 +56,9 @@ $method.getCode()
 			<h2>M&eacute;todos de la clase:</h2>
 			<ul>
 				#foreach( $method in $class.getMethods() )
-				<li><a href="$method.getReport()">$method.getName()</a></li>
+				<li><a href=$C$method.getName()#[[.html]]#$C>$method.getName()</a></li>
 				#end
+				<li><a href="index.html">Volver</a></li>
 			<ul>
 		</div>
 		

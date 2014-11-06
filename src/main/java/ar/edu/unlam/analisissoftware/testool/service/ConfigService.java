@@ -26,7 +26,7 @@ public class ConfigService {
 	@Bean ClassParserFactory classParserFactory(){ return new JapaClassParserFactory(); }
 	@Bean ParserService parserService(){ return new ParserService(classParserFactory()); }
 	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics()); }
-	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool()); }
+	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool(),velocityReportingService()); }
 
 	//Velocity engine
 	@Bean VelocityEngine velocityEngine(){ 

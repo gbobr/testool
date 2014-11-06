@@ -22,7 +22,7 @@ public class JapaClassParser implements ClassParser {
 				CompilationUnit cu=JavaParser.parse(file);				
 				JapaMethodVisitor jmv=new JapaMethodVisitor();
 				jmv.visit(cu,null);
-				return new Class(cu.getClass().getName(),jmv.getMethods(),this);
+				return new Class(file.getName(),jmv.getMethods(),this);
 			} catch (Exception e){
 				e.printStackTrace();
 				throw new ParserException(e);

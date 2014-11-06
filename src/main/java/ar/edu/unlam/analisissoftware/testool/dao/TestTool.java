@@ -35,7 +35,7 @@ public class TestTool {
 		this.metrics = metrics;
 	}
 
-	public ClassReport generateReportForClass(File javaFile,String relativePath){		
+	public ClassReport generateReportForClass(File javaFile,String relativePath, String basePath){		
 		String outPath=getDestinationPath(javaFile.getName(), relativePath);
 		Class myClass;
 		try{
@@ -50,7 +50,7 @@ public class TestTool {
 				reports.add(currentReport);
 			}
 			
-			ClassReport cr=new ClassReport(myClass,reports,outPath+myClass.getName()+".html");
+			ClassReport cr=new ClassReport(myClass,reports,outPath+"/index.html",basePath);
 			velocityReportingService.generateClassReport(cr, outPath);
 			
 			return cr;
