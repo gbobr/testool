@@ -13,6 +13,8 @@ import ar.edu.unlam.analisissoftware.testool.dao.ProjectIterator;
 import ar.edu.unlam.analisissoftware.testool.dao.TestTool;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.CommentPercentMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadLengthMetric;
+import ar.edu.unlam.analisissoftware.testool.metrics.HalsteadVolumeMetric;
 import ar.edu.unlam.analisissoftware.testool.metrics.LocMetric;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
 import ar.edu.unlam.analisissoftware.testool.parsing.ClassParserFactory;
@@ -40,12 +42,15 @@ public class ConfigService {
 	@Bean LocMetric locMetric(){ return new LocMetric();}
 	@Bean CommentMetric commentMetric(){ return new CommentMetric(); }
 	@Bean CommentPercentMetric commentPercentMetric(){ return new CommentPercentMetric(locMetric(), commentMetric()); }
-	
+	@Bean HalsteadLengthMetric lenMetric() { return new HalsteadLengthMetric();}
+	@Bean HalsteadVolumeMetric volumenMetric() { return new HalsteadVolumeMetric();}
 	@Bean List<Metric> metrics() { 
 		List<Metric> metrics = new ArrayList<Metric>();
 		metrics.add(locMetric());
 		metrics.add(commentMetric());
 		metrics.add(commentPercentMetric());
+		metrics.add(lenMetric());
+		metrics.add(volumenMetric());
 		return metrics;
 	}
 
