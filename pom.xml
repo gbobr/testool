@@ -4,7 +4,7 @@
 
   <groupId>ar.edu.unlam.analisissoftware</groupId>
   <artifactId>TestTool</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>0.0.1</version>
   <packaging>jar</packaging>
 
   <name>TestTool</name>
