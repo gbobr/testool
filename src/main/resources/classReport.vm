@@ -1,3 +1,4 @@
+#set ( $C = '"' )
 <html>
 	<head>
 		<title>Reporte de testing $classReport.get_class().getName()</title>
@@ -30,12 +31,12 @@
 				<ul>
 					#foreach( $method in $classReport.getMethodReports() )
 					<li>
-						<a href=#[["]]#$method.getMethod().getName().html#[["]]#>$method.getMethod().getName()</a>
+						<a href=$C$method.getMethod().getName()#[[.html]]#$C>$method.getMethod().getName()</a>
 					</li>
 					#end
 				</ul>
 			</div>
-			<a href="..">Volver</a>
+			<a href=$C$classReport.getBasePath()/index.html$C>Volver</a>
 		</div>		
 	</body>
 </html>

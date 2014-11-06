@@ -1,6 +1,7 @@
+#set ( $C = '"' )
 <html>
 	<head>
-		<title>Reporte de testing $class.getName()</title>
+		<title>Reporte de testing</title>
 		<!--link rel="stylesheet" type="text/css" href="report.css" /-->
 		<style>
 			#header {
@@ -23,42 +24,19 @@
 		</style>
 	</head>
 	<body>
-		<div id="header"><h1>Reporte de testing $method.getName()</h1></div>
+		<div id="header"><h1>Reporte de testing</h1></div>
 		<div id="report">
 			<div class="rptresults">
-				<h3>M&eacute;tricas</h3>
+				<h3>Clases</h3>
 				<ul>
-					#foreach( $metric in $metrics )
+					#foreach( $class in $projectReport.getClasses() )
 					<li>
-						<span class="metricname">
-							$metric.getName()
-						</span>
-						<span class="metricvalue">
-							$metric.getValue()
-						</span>
+						<a href=$C$class.getReportPath()$C>$class.get_class().getName()</a>
 					</li>
 					#end
 				</ul>
 			</div>
-			<div class="code">
-				<h3>C&oacute;digo del m&eacute;todo.</h3>
-				<pre>	
-## public void asd(){
-##	//TODO: Code here
-## }
-$method.getCode()
-				</pre>
-			</div>
-		</div>
-		<div id="leftbar">
-			
-			<h2>M&eacute;todos de la clase:</h2>
-			<ul>
-				#foreach( $method in $class.getMethods() )
-				<li><a href="$method.getReport">$method.getName()</a></li>
-				#end
-			<ul>
-		</div>
-		
+			<a href="..">Volver</a>
+		</div>		
 	</body>
 </html>

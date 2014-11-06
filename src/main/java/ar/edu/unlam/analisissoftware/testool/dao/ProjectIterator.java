@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import ar.edu.unlam.analisissoftware.testool.reports.ClassReport;
 import ar.edu.unlam.analisissoftware.testool.reports.ProjectReport;
+import ar.edu.unlam.analisissoftware.testool.service.VelocityReportingService;
 
 public class ProjectIterator {
 	
@@ -16,16 +17,22 @@ public class ProjectIterator {
 
 	private TestTool testTool;
 	private ProjectReport projectReport;
+	private VelocityReportingService velocityReportingService;
+	private String basePath;
 	
 	@Autowired
-	public ProjectIterator(TestTool testTool) {
+	public ProjectIterator(TestTool testTool, VelocityReportingService velocityReportingService) {
 		super();
 		this.testTool = testTool;
+		this.velocityReportingService=velocityReportingService;
 	}
 	
 	public ProjectReport analyzeProject(File projectDir, File outputDir){		
-		projectReport = new ProjectReport(outputDir.getAbsolutePath()+"/");
-		visitDirectory(projectDir,outputDir.getAbsolutePath()+"/");
+		basePath=outputDir.getAbsolutePath()+"/";
+		projectReport = new ProjectReport(basePath);
+		visitDirectory(projectDir,basePath);
+		
+		velocityReportingService.generateProjectReport(projectReport, basePath);
 		return projectReport;
 	}
 	
@@ -42,7 +49,7 @@ public class ProjectIterator {
 				visitDirectory( file,relativePath+file.getName()+"/" );
 			else if(file.getName().endsWith(".java")){
 				logger.info("Procesando archivo '" + file.getName() + "'");
-				ClassReport cr=testTool.generateReportForClass(file,relativePath);
+				ClassReport cr=testTool.generateReportForClass(file,relativePath,basePath);
 				if(cr!=null){
 					
 					projectReport.addClass(cr);
