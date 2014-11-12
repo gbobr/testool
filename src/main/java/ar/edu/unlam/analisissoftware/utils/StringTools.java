@@ -9,6 +9,9 @@ public final class StringTools {
 		int count = 0;
 		int idx = 0;
 		
+		if( !string.contains( substring ) )
+			return count;
+		
 		int commentStart = string.indexOf("//");
 		
 		if( commentStart == -1 )

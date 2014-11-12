@@ -1,12 +1,26 @@
 package ar.edu.unlam.analisissoftware.testool.metrics;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ar.edu.unlam.analisissoftware.testool.Main;
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
 import ar.edu.unlam.analisissoftware.utils.StringTools;
 
 public class CCMetric extends Metric {
 	
-	private int mCC;
+	static final Logger logger = LoggerFactory.getLogger(CCMetric.class);
+	
+	private int mCC = 0;
+	private int mIf = 0;
+	private int mWhile = 0;
+	private int mFor = 0;
+	private int mCase = 0;
+	private int mCatch = 0;
+	private int mAnd = 0;
+	private int mOr = 0;
+	private int mTernary = 0;
 	
 	@Override
 	public String getName() {
@@ -15,7 +29,16 @@ public class CCMetric extends Metric {
 
 	@Override
 	public String internalGetValue() {
-		return String.format( "%d" , mCC );
+		return String.format( "%d If: %d, While: %d, For: %d, Case: %d, Catch: %d, And: %d, Or: %d, Ternario: %d" , 
+				mCC,
+				mIf,
+				mWhile,
+				mFor,
+				mCase,
+				mCatch,
+				mAnd,
+				mOr,
+				mTernary);
 	}
 
 	@Override
@@ -33,18 +56,33 @@ public class CCMetric extends Metric {
 //			?: ternary operator and ?: Elvis operator.
 //			?. null-check operator
 		
-		mCC = 1;
+		mCC = 0;
+		mIf = 0;
+		mWhile = 0;
+		mFor = 0;
+		mCase = 0;
+		mCatch = 0;
+		mAnd = 0;
+		mOr = 0;
+		mTernary = 0;
+		
 		String[] lines = method.getCode().split( "\n" );
 		
 		for( String line : lines ){	
-			mCC += StringTools.countOccurences( line, "if" );
-			mCC += StringTools.countOccurences( line, "while" );
-			mCC += StringTools.countOccurences( line, "for" );
-			mCC += StringTools.countOccurences( line, "case" );
-			mCC += StringTools.countOccurences( line, "catch" );
-			mCC += StringTools.countOccurences( line, "&&" );
-			mCC += StringTools.countOccurences( line, "||" );
-			mCC += StringTools.countOccurences( line, "?" );
+			line = line.replace(" ", "");
+			
+			mIf 		+= StringTools.countOccurences( line, "if(" );
+			mWhile 		+= StringTools.countOccurences( line, "while(" );
+			mFor		+= StringTools.countOccurences( line, "for(" );
+			mCase		+= StringTools.countOccurences( line, "case" );
+			mCatch		+= StringTools.countOccurences( line, "catch(" );
+			mAnd		+= StringTools.countOccurences( line, "&&" );
+			mOr			+= StringTools.countOccurences( line, "||" );
+			mTernary	+= StringTools.countOccurences( line, "?" );
+				
 		}
+		
+		mCC = mIf + mWhile + mFor + mCase + mCatch + mAnd + mOr + mTernary;
+		mCC = mCC > 1 ? mCC : mCC + 1;
 	}
 }
