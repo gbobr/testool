@@ -9,6 +9,7 @@ import ar.edu.unlam.analisissoftware.testool.model.Metric;
 
 public class MethodReport extends Report {
 	private Class _class;
+	
 	private Method method;
 	private List<Metric> metrics;
 	

@@ -2,6 +2,7 @@ package ar.edu.unlam.analisissoftware.testool.metrics;
 
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
+import ar.edu.unlam.analisissoftware.testool.model.Class;
 import ar.edu.unlam.analisissoftware.utils.StringTools;
 
 public class FanOutMetric extends Metric {
@@ -26,12 +27,14 @@ public class FanOutMetric extends Metric {
 		
 		for( String line : lines ){
 			
-			for( Method classMethod : method.getMethodClass().getMethods() ){
-			
-				if( classMethod == method )
-					continue;
+			for( Class projectClass : method.getMethodClass().getProject().getClasses() ){
+				for( Method classMethod : projectClass.getMethods() ){
 				
-				mFanOut = StringTools.countOccurences( line, classMethod.getName() );
+					if( classMethod.getName().equals(method.getName()) )
+						continue;
+					
+					mFanOut += StringTools.countOccurences( line, classMethod.getName() );
+				}
 			}
 		}
 	}

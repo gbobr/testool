@@ -9,6 +9,7 @@ public class Class {
 	private List<Method> methods;
 	private String name;
 	private ClassParser parser;
+	private Project project;
 	
 	public Class(String name){
 		this.name=name;
@@ -39,6 +40,14 @@ public class Class {
 	
 	public ClassParser getParser(){
 		return parser;
+	}
+	
+	public void setProject( Project project ){
+		this.project = project;
+	}
+	
+	public Project getProject(){
+		return project;
 	}
 	
 }
