@@ -24,6 +24,9 @@ public class HalsteadVolumeMetric extends Metric {
 	Integer vocabulario = n1+n2;
 	Double volumen = longitud * Math.log(vocabulario)/Math.log(2);
 	volumen = (double) Math.round(volumen);
+	
+	
+	
 	return volumen.toString();
 		
 	}

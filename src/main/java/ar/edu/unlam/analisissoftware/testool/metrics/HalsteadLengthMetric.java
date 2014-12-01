@@ -1,6 +1,7 @@
 package ar.edu.unlam.analisissoftware.testool.metrics;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
@@ -8,7 +9,8 @@ import ar.edu.unlam.analisissoftware.testool.model.Metric;
 public class HalsteadLengthMetric extends Metric {
 
 	private ArrayList<String> operadores = new ArrayList<String>();
-	private ArrayList<String> operandosEncontrados = new ArrayList<String>();
+	private HashSet<String> operadoresEncontrados = new HashSet<String>();
+	private HashSet<String> operandosEncontrados = new HashSet<String>();
 	private int N1=0;
 	private int N2=0;
 	
@@ -20,11 +22,14 @@ public class HalsteadLengthMetric extends Metric {
 	@Override
 	public String internalGetValue() {
 		Integer longitud = N1+N2;
-		return longitud.toString();
+		return longitud.toString() + " Operadores: " +operadoresEncontrados.toString() + " Operandos: " +operandosEncontrados.toString();
 	}
 
 	@Override
 	public void internalCalculate(Method method) {
+		operadoresEncontrados = new HashSet<String>();
+		operandosEncontrados = new HashSet<String>();
+		
 		if(operadores.size() == 0)
 			incluirOperadores();
 		  N1=0;
@@ -32,6 +37,8 @@ public class HalsteadLengthMetric extends Metric {
 		for (String operador : operadores){  		      
 		      int cant=0;
 		      if(method.getCode().contains(operador)){
+		    	  if(!operadoresEncontrados.contains(operador))
+		    		  operadoresEncontrados.add(operador);
 		    	  String codigo = method.getCode();		    	  
 		    	  while (codigo.indexOf(operador) > -1)
 		    	   {
@@ -53,13 +60,16 @@ public class HalsteadLengthMetric extends Metric {
 				if(!primer_palabra.contains(".") && !primer_palabra.contains("return")){
 					Linea = Linea.substring(Linea.indexOf(primer_palabra)+primer_palabra.length(),Linea.length()).trim();
 				
-					if(Linea.contains("=") && Linea.contains("new") && Linea.contains(primer_palabra+"("))
+					if(Linea.contains("=") && !Linea.contains("==") && Linea.contains("new") && Linea.contains(primer_palabra+"(")) 
 						operandosEncontrados.add(Linea.substring(0, Linea.indexOf("=")));
 					else
-						if(Linea.contains(";") && !Linea.contains (",") && !Linea.contains("(")&& !Linea.contains(" "))
-							operandosEncontrados.add(Linea.substring(0, Linea.indexOf(";")));	
+						if(Linea.contains("=") && !Linea.contains("==") && Linea.contains(");"))
+							operandosEncontrados.add(primer_palabra);
 						else
-							if(Linea.contains(";") && Linea.contains(",") && !Linea.contains("(")){
+							if(Linea.contains(";") && !Linea.contains (",") && !Linea.contains("(")&& !Linea.contains(" "))
+								operandosEncontrados.add(Linea.substring(0, Linea.indexOf(";")));	
+							else
+								if(Linea.contains(";") && Linea.contains(",") && !Linea.contains("(")){
 								
 								String conComa = Linea.substring(0, Linea.indexOf(","));
 								operandosEncontrados.add(conComa);
