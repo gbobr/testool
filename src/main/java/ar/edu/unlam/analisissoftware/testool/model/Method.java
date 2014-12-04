@@ -1,5 +1,7 @@
 package ar.edu.unlam.analisissoftware.testool.model;
 
+import java.util.ArrayList;
+
 import ar.edu.unlam.analisissoftware.testool.parsing.MethodParser;
 
 public class Method {
@@ -8,6 +10,7 @@ public class Method {
 	private String code;
 	private MethodParser parser;
 	private Class mClass;
+	private ArrayList<String> comments;
 	
 	public Method(String name, String code, MethodParser parser) {
 		this(name,code);
@@ -26,6 +29,7 @@ public class Method {
 		this.name=name;
 		this.code=code;
 		this.reportUrl = name + ".html";
+		this.comments=new ArrayList<String>();
 	}
 
 	public String getName() {
@@ -48,5 +52,13 @@ public class Method {
 
 	public void setMethodClass(Class methodClass) {
 		this.mClass = methodClass;
+	}
+
+	public ArrayList<String> getComments() {
+		return comments;
+	}
+	
+	public void addComment(String comment){
+		this.comments.add(comment);
 	}
 }
