@@ -12,9 +12,9 @@ import org.springframework.stereotype.Component;
 import ar.edu.unlam.analisissoftware.testool.model.Class;
 import ar.edu.unlam.analisissoftware.testool.model.Method;
 import ar.edu.unlam.analisissoftware.testool.model.Metric;
+import ar.edu.unlam.analisissoftware.testool.model.Project;
 import ar.edu.unlam.analisissoftware.testool.reports.ClassReport;
 import ar.edu.unlam.analisissoftware.testool.reports.MethodReport;
-import ar.edu.unlam.analisissoftware.testool.service.ConfigService;
 import ar.edu.unlam.analisissoftware.testool.service.ParserService;
 import ar.edu.unlam.analisissoftware.testool.service.VelocityReportingService;
 
@@ -23,8 +23,10 @@ public class TestTool {
 	final Logger logger = LoggerFactory.getLogger(TestTool.class);
 	
 	VelocityReportingService velocityReportingService;
-	ParserService parserService;
+	
 	List<Metric> metrics;
+
+	private ParserService parserService;
 		
 	@Autowired
 	public TestTool(VelocityReportingService velocityReportingService,
@@ -35,11 +37,12 @@ public class TestTool {
 		this.metrics = metrics;
 	}
 
-	public ClassReport generateReportForClass(File javaFile,String relativePath, String basePath){		
+	public ClassReport generateReportForClass(File javaFile,String relativePath, String basePath, Project myProject){		
 		String outPath=getDestinationPath(javaFile.getName(), relativePath);
 		Class myClass;
 		try{
 			myClass=parserService.parse(javaFile);
+			myClass.setProject(myProject);
 		
 			List<MethodReport> reports = new ArrayList<MethodReport>();
 			

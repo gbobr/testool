@@ -30,7 +30,7 @@ public class ConfigService {
 	@Bean ClassParserFactory classParserFactory(){ return new JapaClassParserFactory(); }
 	@Bean ParserService parserService(){ return new ParserService(classParserFactory()); }
 	@Bean TestTool testTool(){ return new TestTool(velocityReportingService(),parserService(),metrics()); }
-	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool(),velocityReportingService()); }
+	@Bean ProjectIterator projectIterator(){ return new ProjectIterator(testTool(),velocityReportingService(), parserService()); }
 	@Bean FanInMetric fanInMetric() { return new FanInMetric(); }
 	@Bean FanOutMetric fanOutMetric() { return new FanOutMetric(); }
 	@Bean CCMetric ccMetric() { return new CCMetric(); }
